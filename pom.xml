@@ -9,10 +9,10 @@
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
 	<groupId>com.trippify</groupId>
-	<artifactId>trippifyapp</artifactId>
+	<artifactId>trippify</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<name>trippifyapp</name>
-	<description>Trippify Planner Application</description>
+	<name>trippify</name>
+	<description>Trippify Trip Planner Application</description>
 	<properties>
 		<java.version>1.8</java.version>
 	</properties>
