@@ -2,12 +2,12 @@ package com.trippify.trippify.trip.model;
 
 public class DestinationVO {
 
-	public String name;
-	public String dateFromStr;
-	public String dateFromDayName;
-	public String dateToStr;
-	public String dateToDayName;
-	public int noOfTripDays;
+	private String name;
+	private String dateFromStr;
+	private String dateFromDayName;
+	private String dateToStr;
+	private String dateToDayName;
+	private int noOfTripDays;
 
 	public String getName() {
 		return name;
