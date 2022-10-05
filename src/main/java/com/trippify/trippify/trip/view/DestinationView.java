@@ -1,34 +1,36 @@
 package com.trippify.trippify.trip.view;
 
+import java.time.LocalDateTime;
 import java.util.Date;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.JoinColumns;
-import javax.persistence.ManyToOne;
+import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
-
-import org.hibernate.annotations.OnDelete;
-import org.hibernate.annotations.OnDeleteAction;
 
 @Entity
 @Table(name = "tb_dest")
+@SequenceGenerator(name = "tripDestIdSeqGenerator", sequenceName = "S_TRIP_DEST_ID", allocationSize = 1)
 public class DestinationView {
 
 	private Long id;
+	private Long tripId;
 	private String name;
 	private Date dateFrom;
 	private Date dateTo;
 	private Integer days;
 	private String createdBy;
-	private Date createdDt;
+	private LocalDateTime createdDt;
 
-	private TripView tripView;
+//	@ManyToOne(fetch = FetchType.LAZY, optional = false)
+//	@JoinColumn(name = "trip_id", nullable = false)
+//	private TripView tripView;
 
 	@Id
+	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "tripDestIdSeqGenerator")
 	@Column(name = "id", nullable = false, precision = 22, scale = 0)
 	public Long getId() {
 		return id;
@@ -74,18 +76,6 @@ public class DestinationView {
 		this.days = days;
 	}
 
-	@ManyToOne(fetch = FetchType.EAGER, optional = false)
-	@JoinColumns({
-			@JoinColumn(name = "id", referencedColumnName = "id", unique = true, nullable = false, insertable = false, updatable = false) })
-	@OnDelete(action = OnDeleteAction.CASCADE)
-	public TripView getTripView() {
-		return tripView;
-	}
-
-	public void setTripView(TripView tripView) {
-		this.tripView = tripView;
-	}
-
 	@Column(name = "created_by", nullable = false)
 	public String getCreatedBy() {
 		return createdBy;
@@ -96,11 +86,11 @@ public class DestinationView {
 	}
 
 	@Column(name = "created_dt", nullable = false)
-	public Date getCreatedDt() {
+	public LocalDateTime getCreatedDt() {
 		return createdDt;
 	}
 
-	public void setCreatedDt(Date createdDt) {
+	public void setCreatedDt(LocalDateTime createdDt) {
 		this.createdDt = createdDt;
 	}
 
