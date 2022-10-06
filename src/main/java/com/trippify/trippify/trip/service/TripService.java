@@ -6,7 +6,6 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -110,11 +109,11 @@ public class TripService {
 			budgetVO.setTransportBudget(trip.getTransportBudget());
 			tripDetailsVO.setNoOfDestinations(trip.getNoOfDestinations());
 
-			Optional<DestinationView> destinationViewList;
-			destinationViewList = this.destDao.findById(trip.getId());
+			List<DestinationView> destinationViewList;
+			destinationViewList = this.destDao.findAllByTripViewId(trip.getId());
 			List<DestinationVO> destinationVOList = new ArrayList<>();
-			DestinationVO destinationVO = new DestinationVO();
-			destinationViewList.ifPresent(destination -> {
+			destinationViewList.forEach(destination -> {
+				DestinationVO destinationVO = new DestinationVO();
 				SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
 				destinationVO.setName(destination.getName());
 				destinationVO.setDateFromStr(formatter.format(destination.getDateFrom()));
