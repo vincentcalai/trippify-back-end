@@ -80,7 +80,9 @@ public class TripService {
 
 		if (response.getStatusCode() == 0) {
 			this.tripDao.save(newTripObj);
+			response.setResultMessage("Trip was created successfully.");
 		}
+
 		return response;
 	}
 
