@@ -8,6 +8,8 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
@@ -17,7 +19,6 @@ import javax.persistence.Table;
 public class DestinationView {
 
 	private Long id;
-	private Long tripId;
 	private String name;
 	private Date dateFrom;
 	private Date dateTo;
@@ -25,9 +26,7 @@ public class DestinationView {
 	private String createdBy;
 	private LocalDateTime createdDt;
 
-//	@ManyToOne(fetch = FetchType.LAZY, optional = false)
-//	@JoinColumn(name = "trip_id", nullable = false)
-//	private TripView tripView;
+	private TripView tripView;
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "tripDestIdSeqGenerator")
@@ -92,6 +91,16 @@ public class DestinationView {
 
 	public void setCreatedDt(LocalDateTime createdDt) {
 		this.createdDt = createdDt;
+	}
+
+	@ManyToOne
+	@JoinColumn(name = "trip_id", referencedColumnName = "id")
+	public TripView getTripView() {
+		return tripView;
+	}
+
+	public void setTripView(TripView tripView) {
+		this.tripView = tripView;
 	}
 
 }

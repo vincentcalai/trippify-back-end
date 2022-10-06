@@ -4,17 +4,23 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.trippify.trippify.common.model.StatusResponse;
 import com.trippify.trippify.trip.dao.IDestinationDao;
 import com.trippify.trippify.trip.dao.ITripDao;
-import com.trippify.trippify.trip.model.reponse.AngularCreateTripResponse;
+import com.trippify.trippify.trip.model.BudgetVO;
+import com.trippify.trippify.trip.model.DestinationVO;
+import com.trippify.trippify.trip.model.ParticularsVO;
+import com.trippify.trippify.trip.model.TripDetailsVO;
+import com.trippify.trippify.trip.model.reponse.TripRest;
+import com.trippify.trippify.trip.model.reponse.TripRestResponse;
 import com.trippify.trippify.trip.model.request.CreateTripRest;
 import com.trippify.trippify.trip.view.DestinationView;
 import com.trippify.trippify.trip.view.TripView;
@@ -29,7 +35,9 @@ public class TripService {
 	@Autowired
 	public IDestinationDao destDao;
 
-	public AngularCreateTripResponse createTrip(CreateTripRest tripInput) {
+	public StatusResponse createTrip(CreateTripRest tripInput) {
+		StatusResponse response = new StatusResponse();
+
 		List<DestinationView> destinationList = new ArrayList<>();
 		TripView newTripObj = new TripView();
 		newTripObj.setName(tripInput.getParticulars().getName());
@@ -46,7 +54,7 @@ public class TripService {
 		newTripObj.setCreatedBy("VINCENT");
 		newTripObj.setCreatedDt(LocalDateTime.now());
 
-		Arrays.stream(tripInput.getTripDetails().getDestinations()).forEach(destination -> {
+		tripInput.getTripDetails().getDestinations().forEach(destination -> {
 
 			DestinationView destinationView = new DestinationView();
 			destinationView.setName(destination.getName());
@@ -56,11 +64,13 @@ public class TripService {
 
 			try {
 				Date dateFrom = new SimpleDateFormat("dd/MM/yyyy").parse(destination.getDateFromStr());
-				Date dateTo = new SimpleDateFormat("dd/MM/yyyy").parse(destination.getDateFromStr());
+				Date dateTo = new SimpleDateFormat("dd/MM/yyyy").parse(destination.getDateToStr());
 				destinationView.setDateFrom(dateFrom);
 				destinationView.setDateTo(dateTo);
 			} catch (ParseException e) {
 				// TODO Auto-generated catch block
+				response.setStatusCode(1);
+				response.setResultMessage("Exception parsing dateFrom or dateTo");
 				e.printStackTrace();
 			}
 
@@ -69,7 +79,63 @@ public class TripService {
 
 		newTripObj.setDestinations(destinationList);
 
-		this.tripDao.save(newTripObj);
-		return null;
+		if (response.getStatusCode() == 0) {
+			this.tripDao.save(newTripObj);
+		}
+		return response;
+	}
+
+	public TripRestResponse findAllTrips() {
+		TripRestResponse response = new TripRestResponse();
+		List<TripRest> tripRestList = new ArrayList<>();
+		List<TripView> tripViewList = new ArrayList<>();
+		tripViewList = this.tripDao.findAll();
+
+		tripViewList.forEach(trip -> {
+			TripRest tripRest = new TripRest();
+
+			ParticularsVO particularVO = new ParticularsVO();
+			BudgetVO budgetVO = new BudgetVO();
+			TripDetailsVO tripDetailsVO = new TripDetailsVO();
+
+			tripRest.setId(trip.getId());
+			particularVO.setName(trip.getName());
+			particularVO.setEmail(trip.getEmail());
+			budgetVO.setAttractionBudget(trip.getAttractionBudget());
+			budgetVO.setFlightBudget(trip.getFlightBudget());
+			budgetVO.setFoodBudget(trip.getFoodBudget());
+			budgetVO.setHotelBudget(trip.getHotelBudget());
+			budgetVO.setOtherBudget(trip.getOtherBudget());
+			budgetVO.setTotalBudget(trip.getTotalBudget());
+			budgetVO.setTransportBudget(trip.getTransportBudget());
+			tripDetailsVO.setNoOfDestinations(trip.getNoOfDestinations());
+
+			Optional<DestinationView> destinationViewList;
+			destinationViewList = this.destDao.findById(trip.getId());
+			List<DestinationVO> destinationVOList = new ArrayList<>();
+			DestinationVO destinationVO = new DestinationVO();
+			destinationViewList.ifPresent(destination -> {
+				SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
+				destinationVO.setName(destination.getName());
+				destinationVO.setDateFromStr(formatter.format(destination.getDateFrom()));
+				destinationVO.setDateToStr(formatter.format(destination.getDateTo()));
+				destinationVO.setNoOfTripDays(destination.getDays());
+				destinationVOList.add(destinationVO);
+			});
+
+			tripDetailsVO.setDestinations(destinationVOList);
+
+			tripRest.setParticulars(particularVO);
+			tripRest.setBudget(budgetVO);
+			tripRest.setTripDetails(tripDetailsVO);
+			tripRest.setCreatedBy(trip.getCreatedBy());
+			tripRest.setCreatedDt(trip.getCreatedDt());
+
+			tripRestList.add(tripRest);
+		});
+
+		response.setTripList(tripRestList);
+
+		return response;
 	}
 }

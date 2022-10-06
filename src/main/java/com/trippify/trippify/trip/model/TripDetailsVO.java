@@ -1,9 +1,11 @@
 package com.trippify.trippify.trip.model;
 
+import java.util.List;
+
 public class TripDetailsVO {
 
 	private int noOfDestinations;
-	private DestinationVO[] destinations;
+	private List<DestinationVO> destinations;
 
 	public int getNoOfDestinations() {
 		return noOfDestinations;
@@ -13,11 +15,11 @@ public class TripDetailsVO {
 		this.noOfDestinations = noOfDestinations;
 	}
 
-	public DestinationVO[] getDestinations() {
+	public List<DestinationVO> getDestinations() {
 		return destinations;
 	}
 
-	public void setDestinations(DestinationVO[] destinations) {
+	public void setDestinations(List<DestinationVO> destinations) {
 		this.destinations = destinations;
 	}
 
