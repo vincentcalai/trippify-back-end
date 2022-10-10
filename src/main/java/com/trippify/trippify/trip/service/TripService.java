@@ -8,6 +8,10 @@ import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -86,11 +90,14 @@ public class TripService {
 		return response;
 	}
 
-	public TripRestResponse findAllTrips() {
+	public TripRestResponse findAllTrips(int page, int size) {
+
+		Pageable pageable = PageRequest.of(page - 1, size);
+
 		TripRestResponse response = new TripRestResponse();
 		List<TripRest> tripRestList = new ArrayList<>();
-		List<TripView> tripViewList = new ArrayList<>();
-		tripViewList = this.tripDao.findAll();
+		Page<TripView> tripViewList = this.tripDao.findAll(pageable);
+		long totalRec = this.tripDao.count();
 
 		tripViewList.forEach(trip -> {
 			TripRest tripRest = new TripRest();
@@ -135,7 +142,18 @@ public class TripService {
 			tripRestList.add(tripRest);
 		});
 
-		response.setTripList(tripRestList);
+		PageImpl<TripRest> tripViewPage = new PageImpl(tripRestList, pageable, totalRec);
+
+		response.setTripList(tripViewPage);
+
+		return response;
+	}
+
+	public StatusResponse deleteTrip(Long id) {
+		StatusResponse response = new StatusResponse();
+
+		this.tripDao.deleteById(id);
+		response.setResultMessage("Trip ID: " + id + " was deleted successfully.");
 
 		return response;
 	}

@@ -7,5 +7,4 @@ import com.trippify.trippify.trip.view.TripView;
 
 @Repository
 public interface ITripDao extends JpaRepository<TripView, Long> {
-
 }
