@@ -60,7 +60,8 @@ public class TripService {
 		tripInput.getTripDetails().getDestinations().forEach(destination -> {
 
 			DestinationView destinationView = new DestinationView();
-			destinationView.setName(destination.getName());
+			destinationView.setCtryName(destination.getCtryName());
+			destinationView.setCityName(destination.getCityName());
 			destinationView.setDays(destination.getNoOfTripDays());
 			destinationView.setCreatedBy("VINCENT");
 			destinationView.setCreatedDt(LocalDateTime.now());
@@ -124,7 +125,8 @@ public class TripService {
 			destinationViewList.forEach(destination -> {
 				DestinationVO destinationVO = new DestinationVO();
 				SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
-				destinationVO.setName(destination.getName());
+				destinationVO.setCtryName(destination.getCtryName());
+				destinationVO.setCityName(destination.getCityName());
 				destinationVO.setDateFromStr(formatter.format(destination.getDateFrom()));
 				destinationVO.setDateToStr(formatter.format(destination.getDateTo()));
 				destinationVO.setNoOfTripDays(destination.getDays());

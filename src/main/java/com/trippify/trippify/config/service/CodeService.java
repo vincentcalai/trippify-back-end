@@ -18,12 +18,13 @@ import com.trippify.trippify.config.view.ICodeDao.CodeView;
 public class CodeService {
 
 	private static final String CD_CITY = "CD_CITY";
+	private static final String CD_CTRY = "CD_CTRY";
 
 	@Autowired
 	private ICodeDAO codeDAO;
 
-	public Map<String, List<CodeViewVO>> retrieveCityCode(String cd) {
-		Map<String, List<CodeViewVO>> citiesMap = new HashMap<>();
+	public Map<String, List<CodeViewVO>> retrieveCodes(String cd) {
+		Map<String, List<CodeViewVO>> codeMap = new HashMap<>();
 		List<CodeView> list = codeDAO.findByCdTyp(cd);
 		List<CodeViewVO> codeViewVOList = new ArrayList<>();
 		list.forEach(rec -> {
@@ -32,7 +33,7 @@ public class CodeService {
 			codeViewVO.setCdDesc(rec.getCdDesc());
 			codeViewVOList.add(codeViewVO);
 		});
-		citiesMap.put(CD_CITY, codeViewVOList);
-		return citiesMap;
+		codeMap.put(CD_CTRY, codeViewVOList);
+		return codeMap;
 	}
 }

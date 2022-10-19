@@ -19,7 +19,8 @@ import javax.persistence.Table;
 public class DestinationView {
 
 	private Long id;
-	private String name;
+	private String ctryName;
+	private String cityName;
 	private Date dateFrom;
 	private Date dateTo;
 	private Integer days;
@@ -39,13 +40,22 @@ public class DestinationView {
 		this.id = id;
 	}
 
-	@Column(name = "name", length = 100, nullable = false)
-	public String getName() {
-		return name;
+	@Column(name = "ctry", length = 100, nullable = false)
+	public String getCtryName() {
+		return ctryName;
 	}
 
-	public void setName(String name) {
-		this.name = name;
+	public void setCtryName(String ctryName) {
+		this.ctryName = ctryName;
+	}
+
+	@Column(name = "city", length = 100, nullable = false)
+	public String getCityName() {
+		return cityName;
+	}
+
+	public void setCityName(String cityName) {
+		this.cityName = cityName;
 	}
 
 	@Column(name = "date_from", nullable = false)

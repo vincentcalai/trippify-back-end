@@ -2,19 +2,28 @@ package com.trippify.trippify.trip.model;
 
 public class DestinationVO {
 
-	private String name;
+	private String ctryName;
+	private String cityName;
 	private String dateFromStr;
 	private String dateFromDayName;
 	private String dateToStr;
 	private String dateToDayName;
 	private int noOfTripDays;
 
-	public String getName() {
-		return name;
+	public String getCtryName() {
+		return ctryName;
 	}
 
-	public void setName(String name) {
-		this.name = name;
+	public void setCtryName(String ctryName) {
+		this.ctryName = ctryName;
+	}
+
+	public String getCityName() {
+		return cityName;
+	}
+
+	public void setCityName(String cityName) {
+		this.cityName = cityName;
 	}
 
 	public String getDateFromStr() {
@@ -56,4 +65,5 @@ public class DestinationVO {
 	public void setNoOfTripDays(int noOfTripDays) {
 		this.noOfTripDays = noOfTripDays;
 	}
+
 }
