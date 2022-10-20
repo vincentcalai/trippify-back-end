@@ -11,37 +11,33 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.trippify.trippify.common.model.ConfigResponseBean;
-import com.trippify.trippify.config.model.CodeViewVO;
-import com.trippify.trippify.config.service.CodeService;
+import com.trippify.trippify.config.model.DestCodeViewVO;
+import com.trippify.trippify.config.service.DestCodeService;
 
 @CrossOrigin(origins = "http://localhost:4401", allowedHeaders = "*")
 @RestController
 @RequestMapping(path = "/code")
-public class CodeController {
+public class DestCodeController {
 
 	private static final String CD_TYP = "cdTyp";
-	// private static final String CD_CITY = "CITY";
-	private static final String CD_CTRY = "CTRY";
 
 	@Autowired
-	private CodeService codeService;
+	private DestCodeService codeService;
 
 	@GetMapping("/retrieveCodeResult")
 	public ConfigResponseBean retrieveCodeResult() {
 		ConfigResponseBean response = new ConfigResponseBean();
-		// Map<String, List<CodeViewVO>> citiesMap = this.retrieveCityCode(CD_CITY);
-		Map<String, List<CodeViewVO>> ctryMap = this.retrieveCodes(CD_CTRY);
+		Map<String, List<DestCodeViewVO>> destCdMap = this.retrieveCodes();
 
 		Map<String, Map<String, ?>> result = new HashMap<>();
-		// result.put(CD_TYP, citiesMap);
-		result.put(CD_TYP, ctryMap);
+		result.put(CD_TYP, destCdMap);
 
 		response.setResult(result);
 		return response;
 
 	}
 
-	private Map<String, List<CodeViewVO>> retrieveCodes(String cd) {
-		return this.codeService.retrieveCodes(cd);
+	private Map<String, List<DestCodeViewVO>> retrieveCodes() {
+		return this.codeService.retrieveCodes();
 	}
 }
