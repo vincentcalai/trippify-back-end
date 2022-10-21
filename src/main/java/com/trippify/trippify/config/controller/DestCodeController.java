@@ -22,9 +22,9 @@ public class DestCodeController {
 	private static final String CD_TYP = "cdTyp";
 
 	@Autowired
-	private DestCodeService codeService;
+	private DestCodeService destCodeService;
 
-	@GetMapping("/retrieveCodeResult")
+	@GetMapping("/retrieveDestCode")
 	public ConfigResponseBean retrieveCodeResult() {
 		ConfigResponseBean response = new ConfigResponseBean();
 		Map<String, List<DestCodeViewVO>> destCdMap = this.retrieveCodes();
@@ -38,6 +38,6 @@ public class DestCodeController {
 	}
 
 	private Map<String, List<DestCodeViewVO>> retrieveCodes() {
-		return this.codeService.retrieveCodes();
+		return this.destCodeService.retrieveCodes();
 	}
 }

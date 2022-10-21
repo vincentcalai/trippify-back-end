@@ -24,17 +24,17 @@ public class TripController {
 	@Autowired
 	TripService tripService;
 
-	@PostMapping(value = "/create-trip")
+	@PostMapping(value = "/createTrip")
 	public StatusResponse createTrip(@RequestBody CreateTripRest tripInput) {
 		return tripService.createTrip(tripInput);
 	}
 
-	@GetMapping(value = "/get-trips")
+	@GetMapping(value = "/getTrips")
 	public TripRestResponse getAllTrips(@RequestParam("page") int page, @RequestParam("size") int size) {
 		return tripService.findAllTrips(page, size);
 	}
 
-	@DeleteMapping(value = "/delete-trip/{id}")
+	@DeleteMapping(value = "/deleteTrip/{id}")
 	public StatusResponse deleteTrip(@PathVariable Long id) {
 		return tripService.deleteTrip(id);
 	}
