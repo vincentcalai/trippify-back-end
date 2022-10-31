@@ -1,5 +1,5 @@
 CREATE TABLE `tb_trip` (
-  `id` int NOT NULL,
+  `id` int NOT NULL AUTO_INCREMENT,
   `name` varchar(66) NOT NULL,
   `email` varchar(100) NOT NULL,
   `flight_bgt` decimal(10,0) NOT NULL,
@@ -23,7 +23,7 @@ CREATE TABLE `tb_dest_cd` (
 );
 
 CREATE TABLE `tb_dest` (
-  `id` int NOT NULL,
+  `id` int NOT NULL AUTO_INCREMENT,
   `trip_id` int DEFAULT NULL,
   `ctry` varchar(100) NOT NULL,
   `city` varchar(100) NOT NULL,
@@ -34,13 +34,5 @@ CREATE TABLE `tb_dest` (
   `created_dt` datetime NOT NULL,
   PRIMARY KEY (`id`),
   CONSTRAINT `FKnxdiy432nina5wlm3v6jftnji` FOREIGN KEY (`trip_id`) REFERENCES `tb_trip` (`id`)
-);
-
-CREATE TABLE `s_trip_id` (
-  `next_val` bigint DEFAULT NULL
-);
-
-CREATE TABLE `s_trip_dest_id` (
-  `next_val` bigint DEFAULT NULL
 );
 

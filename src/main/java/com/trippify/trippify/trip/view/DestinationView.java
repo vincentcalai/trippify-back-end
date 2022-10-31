@@ -10,12 +10,10 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
-import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
 @Entity
 @Table(name = "tb_dest")
-@SequenceGenerator(name = "tripDestIdSeqGenerator", sequenceName = "S_TRIP_DEST_ID", allocationSize = 1)
 public class DestinationView {
 
 	private Long id;
@@ -30,7 +28,7 @@ public class DestinationView {
 	private TripView tripView;
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "tripDestIdSeqGenerator")
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "id", nullable = false, precision = 22, scale = 0)
 	public Long getId() {
 		return id;
