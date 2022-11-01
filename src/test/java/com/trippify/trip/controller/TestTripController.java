@@ -11,7 +11,6 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.RequestBuilder;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
-import org.springframework.transaction.annotation.Transactional;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.trippify.TestWithSpringBoot;
@@ -22,9 +21,6 @@ import com.trippify.trippify.trip.model.TripDetailsVO;
 import com.trippify.trippify.trip.model.request.CreateTripRest;
 
 public class TestTripController extends TestWithSpringBoot {
-
-//	@InjectMocks
-//	TripController tripController;
 
 	@Autowired
 	private MockMvc mockMvc;
@@ -67,7 +63,6 @@ public class TestTripController extends TestWithSpringBoot {
 		return singleTripDestList;
 	}
 
-	@Transactional
 	@Test
 	void testCreateTrip() throws Exception {
 		ParticularsVO particulars = setupParticulars();
@@ -86,10 +81,8 @@ public class TestTripController extends TestWithSpringBoot {
 		RequestBuilder requestBuilt = MockMvcRequestBuilders.post("/trip/createTrip").content(request)
 				.contentType(MediaType.APPLICATION_JSON);
 		this.mockMvc.perform(requestBuilt).andExpect(MockMvcResultMatchers.status().isOk());
-
 	}
 
-	@Transactional
 	@Test
 	void testGetAllTrips() throws Exception {
 		RequestBuilder requestBuilt = MockMvcRequestBuilders.get("/trip/getTrips").param("page", "1")
@@ -97,7 +90,6 @@ public class TestTripController extends TestWithSpringBoot {
 		this.mockMvc.perform(requestBuilt).andExpect(MockMvcResultMatchers.status().isOk());
 	}
 
-	@Transactional
 	@Test
 	void testDeleteTrip() throws Exception {
 		RequestBuilder requestBuilt = MockMvcRequestBuilders.delete("/trip/deleteTrip/{id}", 100L)

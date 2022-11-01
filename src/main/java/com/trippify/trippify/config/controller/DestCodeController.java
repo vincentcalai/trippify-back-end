@@ -34,7 +34,6 @@ public class DestCodeController {
 
 		response.setResult(result);
 		return response;
-
 	}
 
 	private Map<String, List<DestCodeViewVO>> retrieveCodes() {
