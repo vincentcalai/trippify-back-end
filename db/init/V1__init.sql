@@ -36,3 +36,15 @@ CREATE TABLE `tb_dest` (
   CONSTRAINT `FKnxdiy432nina5wlm3v6jftnji` FOREIGN KEY (`trip_id`) REFERENCES `tb_trip` (`id`)
 );
 
+CREATE TABLE `tb_usr` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `usr_nam` varchar(20) NOT NULL,
+  `pwd` varchar(100) NOT NULL,
+  `email` varchar(100) NOT NULL,
+  `contact_no` varchar(30) NOT NULL,
+  `del_ind` varchar(1) NOT NULL,
+  `created_by` varchar(20) DEFAULT NULL,
+  `created_dt` datetime DEFAULT NULL,
+  PRIMARY KEY (`id`)
+);
+
