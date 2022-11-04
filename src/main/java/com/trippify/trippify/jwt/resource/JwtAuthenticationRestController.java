@@ -2,8 +2,6 @@ package com.trippify.trippify.jwt.resource;
 
 import java.util.Objects;
 
-import javax.servlet.http.HttpServletRequest;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
@@ -53,20 +51,20 @@ public class JwtAuthenticationRestController {
 		return ResponseEntity.ok(new JwtTokenResponse(token));
 	}
 
-	@RequestMapping(value = "${jwt.refresh.token.uri}", method = RequestMethod.GET)
-	public ResponseEntity<?> refreshAndGetAuthenticationToken(HttpServletRequest request) {
-		String authToken = request.getHeader(tokenHeader);
-		final String token = authToken.substring(7);
-		String username = jwtTokenUtil.getUsernameFromToken(token);
-//		JwtUserDetails user = (JwtUserDetails) jwtInMemoryUserDetailsService.loadUserByUsername(username);
-
-		if (jwtTokenUtil.canTokenBeRefreshed(token)) {
-			String refreshedToken = jwtTokenUtil.refreshToken(token);
-			return ResponseEntity.ok(new JwtTokenResponse(refreshedToken));
-		} else {
-			return ResponseEntity.badRequest().body(null);
-		}
-	}
+//	@RequestMapping(value = "${jwt.refresh.token.uri}", method = RequestMethod.GET)
+//	public ResponseEntity<?> refreshAndGetAuthenticationToken(HttpServletRequest request) {
+//		String authToken = request.getHeader(tokenHeader);
+//		final String token = authToken.substring(7);
+//		String username = jwtTokenUtil.getUsernameFromToken(token);
+////		JwtUserDetails user = (JwtUserDetails) jwtInMemoryUserDetailsService.loadUserByUsername(username);
+//
+//		if (jwtTokenUtil.canTokenBeRefreshed(token)) {
+//			String refreshedToken = jwtTokenUtil.refreshToken(token);
+//			return ResponseEntity.ok(new JwtTokenResponse(refreshedToken));
+//		} else {
+//			return ResponseEntity.badRequest().body(null);
+//		}
+//	}
 
 	@ExceptionHandler({ AuthenticationException.class })
 	public ResponseEntity<String> handleAuthenticationException(AuthenticationException e) {

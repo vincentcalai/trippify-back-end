@@ -34,25 +34,25 @@ public class JwtUserDetails implements UserDetails {
 		this.authorities = authorities;
 	}
 
-	public JwtUserDetails(Long id, String username, String password, String role) {
-		this.id = id;
-		this.username = username;
-		this.password = password;
-
-		String[] roleArray = role.split(", ");
-
-		List<SimpleGrantedAuthority> authorities = new ArrayList<SimpleGrantedAuthority>();
-		for (int i = 0; i < roleArray.length; i++) {
-			authorities.add(new SimpleGrantedAuthority(roleArray[i]));
-		}
-
-		this.authorities = authorities;
-	}
-
-	@JsonIgnore
-	public Long getId() {
-		return id;
-	}
+//	public JwtUserDetails(Long id, String username, String password, String role) {
+//		this.id = id;
+//		this.username = username;
+//		this.password = password;
+//
+//		String[] roleArray = role.split(", ");
+//
+//		List<SimpleGrantedAuthority> authorities = new ArrayList<SimpleGrantedAuthority>();
+//		for (int i = 0; i < roleArray.length; i++) {
+//			authorities.add(new SimpleGrantedAuthority(roleArray[i]));
+//		}
+//
+//		this.authorities = authorities;
+//	}
+//
+//	@JsonIgnore
+//	public Long getId() {
+//		return id;
+//	}
 
 	@Override
 	public String getUsername() {

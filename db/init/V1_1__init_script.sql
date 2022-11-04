@@ -20,6 +20,12 @@
 --
 
 /*!40000 ALTER TABLE `tb_dest_cd` DISABLE KEYS */;
+
+--init tb_usr
+INSERT INTO `tb_usr` (`id`, `usr_nam`, `pwd`, `email`, `contact_no`,  `del_ind`, `created_by`, `created_dt`) VALUES 
+(1, 'TESTUSER', '$2a$10$bnjuoWda4g6T91PVg9twXOIp9CVpNByQXm4OaLdkJZd7x3hkal6Wq', 'TESTUSER@TEST.COM', '99999999', 'N', 'TESTUSER', CURRENT_TIMESTAMP());
+
+--init tb_dest_cd
 INSERT INTO `tb_dest_cd` (`id`,`ctry`,`city`) VALUES (1,'Afghanistan','‘Alāqahdārī Dīshū');
 INSERT INTO `tb_dest_cd` (`id`,`ctry`,`city`) VALUES (2,'Afghanistan','Aībak');
 INSERT INTO `tb_dest_cd` (`id`,`ctry`,`city`) VALUES (93,'Albania','Bajram Curri');
