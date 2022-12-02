@@ -11,6 +11,7 @@ import java.util.Optional;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 
 import com.trippify.TestWithSpringBoot;
 import com.trippify.trippify.common.model.StatusResponse;
@@ -123,7 +124,7 @@ public class TestTripService extends TestWithSpringBoot {
 		assertEquals("Trip was created successfully.", statusResponse.getResultMessage());
 
 		Optional<TripView> result = this.tripDao.findById(104L);
-		assertFalse(result.isEmpty());
+		assertTrue(result.isPresent());
 	}
 
 	@Test
@@ -145,7 +146,7 @@ public class TestTripService extends TestWithSpringBoot {
 		assertEquals("Trip was created successfully.", statusResponse.getResultMessage());
 
 		Optional<TripView> result1 = this.tripDao.findById(104L);
-		assertFalse(result1.isEmpty());
+		assertTrue(result1.isPresent());
 	}
 
 	@Test
@@ -177,15 +178,16 @@ public class TestTripService extends TestWithSpringBoot {
 		assertEquals("Exception parsing dateFrom or dateTo", statusResponse.getResultMessage());
 
 		Optional<TripView> result1 = this.tripDao.findById(104L);
-		assertTrue(result1.isEmpty());
+		assertFalse(result1.isPresent());
 	}
 
 	@Test
 	void findAllTripsSuccess() throws Exception {
 		TripRestResponse tripRestResponse = new TripRestResponse();
 		tripRestResponse = tripService.findAllTrips(1, 10);
-		List<TripRest> result = tripRestResponse.getTripList().get().toList();
-		assertEquals(4, result.size());
+		Page<TripRest> result = tripRestResponse.getTripList();
+		List<TripRest> list = result.getContent();
+		assertEquals(4, list.size());
 	}
 
 	@Test
