@@ -15,4 +15,6 @@ public interface IUserDao extends JpaRepository<UserView, Long> {
 
 	List<UserView> findAllByDelInd(String delInd);
 
+	UserView findByUsername(String username);
+
 }

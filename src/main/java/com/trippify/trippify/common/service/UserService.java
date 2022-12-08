@@ -1,6 +1,7 @@
 package com.trippify.trippify.common.service;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -8,7 +9,9 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.trippify.trippify.common.dao.IUserDao;
+import com.trippify.trippify.common.model.StatusResponse;
 import com.trippify.trippify.common.model.UserVO;
+import com.trippify.trippify.common.model.request.CreateUserRest;
 import com.trippify.trippify.common.view.UserView;
 
 @Transactional
@@ -33,5 +36,34 @@ public class UserService {
 			return userVOList;
 		}
 		return null;
+	}
+
+	public StatusResponse createUser(CreateUserRest userInput) {
+		StatusResponse response = new StatusResponse();
+		UserView user = null;
+		if (isUsernameUnique(userInput.getUserVO().getUsername())) {
+			UserVO userInputVO = userInput.getUserVO();
+			user = new UserView();
+			user.setUsername(userInputVO.getUsername());
+			user.setPassword(userInputVO.getPassword());
+			user.setEmail(userInputVO.getEmail());
+			user.setDelInd("N");
+			user.setCreatedBy(null);
+			user.setCreatedDt(new Date());
+		} else {
+			response.setStatusCode(1);
+			response.setResultMessage("Username already existed. Please use another username");
+			return response;
+		}
+
+		this.userDao.save(user);
+		response.setResultMessage("User was created successfully.");
+
+		return response;
+	}
+
+	public boolean isUsernameUnique(String username) {
+		UserView user = userDao.findByUsername(username);
+		return (user == null);
 	}
 }
