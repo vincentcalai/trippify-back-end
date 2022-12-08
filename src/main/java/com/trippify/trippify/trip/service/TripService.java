@@ -144,7 +144,7 @@ public class TripService {
 			tripRestList.add(tripRest);
 		});
 
-		PageImpl<TripRest> tripViewPage = new PageImpl(tripRestList, pageable, totalRec);
+		PageImpl<TripRest> tripViewPage = new PageImpl<TripRest>(tripRestList, pageable, totalRec);
 
 		response.setTripList(tripViewPage);
 
