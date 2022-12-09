@@ -3,13 +3,14 @@ package com.trippify.trippify.common.model.request;
 import com.trippify.trippify.common.model.UserVO;
 
 public class CreateUserRest {
-	private UserVO userVO;
+	private UserVO user;
 
-	public UserVO getUserVO() {
-		return userVO;
+	public UserVO getUser() {
+		return user;
 	}
 
-	public void setUserVO(UserVO userVO) {
-		this.userVO = userVO;
+	public void setUser(UserVO user) {
+		this.user = user;
 	}
+
 }

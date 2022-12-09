@@ -41,17 +41,18 @@ public class UserService {
 	public StatusResponse createUser(CreateUserRest userInput) {
 		StatusResponse response = new StatusResponse();
 		UserView user = null;
-		if (isUsernameUnique(userInput.getUserVO().getUsername())) {
-			UserVO userInputVO = userInput.getUserVO();
+		if (isUsernameUnique(userInput.getUser().getUsername())) {
+			UserVO userInputVO = userInput.getUser();
 			user = new UserView();
 			user.setUsername(userInputVO.getUsername());
 			user.setPassword(userInputVO.getPassword());
 			user.setEmail(userInputVO.getEmail());
+			user.setContactNo(userInputVO.getContactNo());
 			user.setDelInd("N");
 			user.setCreatedBy(null);
 			user.setCreatedDt(new Date());
 		} else {
-			response.setStatusCode(1);
+			response.setStatusCode(2);
 			response.setResultMessage("Username already existed. Please use another username");
 			return response;
 		}
