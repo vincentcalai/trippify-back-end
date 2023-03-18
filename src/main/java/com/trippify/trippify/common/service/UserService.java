@@ -5,6 +5,7 @@ import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -20,6 +21,9 @@ public class UserService {
 
 	@Autowired
 	private IUserDao userDao;
+
+	@Autowired
+	private PasswordEncoder passwordEncoder;
 
 	public List<UserVO> retrieveRegUsers() {
 		List<UserView> userView = this.userDao.findAllByDelInd("N");
@@ -45,7 +49,7 @@ public class UserService {
 			UserVO userInputVO = userInput.getUser();
 			user = new UserView();
 			user.setUsername(userInputVO.getUsername());
-			user.setPassword(userInputVO.getPassword());
+			user.setPassword(passwordEncoder.encode(userInputVO.getPassword()));
 			user.setEmail(userInputVO.getEmail());
 			user.setContactNo(userInputVO.getContactNo());
 			user.setDelInd("N");
