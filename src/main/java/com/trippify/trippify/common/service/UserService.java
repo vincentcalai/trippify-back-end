@@ -14,6 +14,7 @@ import com.trippify.trippify.common.model.StatusResponse;
 import com.trippify.trippify.common.model.UserVO;
 import com.trippify.trippify.common.model.request.CreateUserRest;
 import com.trippify.trippify.common.view.UserView;
+import com.trippify.trippify.util.Constants;
 
 @Transactional
 @Service
@@ -26,7 +27,7 @@ public class UserService {
 	private PasswordEncoder passwordEncoder;
 
 	public List<UserVO> retrieveRegUsers() {
-		List<UserView> userView = this.userDao.findAllByDelInd("N");
+		List<UserView> userView = this.userDao.findAllByDelInd(Constants.NO);
 		if (userView != null && userView.size() > 0) {
 			List<UserVO> userVOList = new ArrayList<>();
 			userView.forEach(user -> {
@@ -52,17 +53,16 @@ public class UserService {
 			user.setPassword(passwordEncoder.encode(userInputVO.getPassword()));
 			user.setEmail(userInputVO.getEmail());
 			user.setContactNo(userInputVO.getContactNo());
-			user.setDelInd("N");
-			user.setCreatedBy(null);
+			user.setDelInd(Constants.NO);
 			user.setCreatedDt(new Date());
 		} else {
 			response.setStatusCode(2);
-			response.setResultMessage("Username already existed. Please use another username");
+			response.setResultMessage(Constants.ERR_USER_EXIST);
 			return response;
 		}
 
 		this.userDao.save(user);
-		response.setResultMessage("User was created successfully.");
+		response.setResultMessage(Constants.USER_CREATE_SUCCESS);
 
 		return response;
 	}

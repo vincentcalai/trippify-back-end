@@ -27,6 +27,7 @@ import com.trippify.trippify.trip.model.reponse.TripRestResponse;
 import com.trippify.trippify.trip.model.request.CreateTripRest;
 import com.trippify.trippify.trip.view.DestinationView;
 import com.trippify.trippify.trip.view.TripView;
+import com.trippify.trippify.util.Constants;
 
 @Transactional
 @Service
@@ -67,14 +68,14 @@ public class TripService {
 			destinationView.setCreatedDt(LocalDateTime.now());
 
 			try {
-				Date dateFrom = new SimpleDateFormat("dd/MM/yyyy").parse(destination.getDateFromStr());
-				Date dateTo = new SimpleDateFormat("dd/MM/yyyy").parse(destination.getDateToStr());
+				Date dateFrom = new SimpleDateFormat(Constants.DD_MM_YYYY).parse(destination.getDateFromStr());
+				Date dateTo = new SimpleDateFormat(Constants.DD_MM_YYYY).parse(destination.getDateToStr());
 				destinationView.setDateFrom(dateFrom);
 				destinationView.setDateTo(dateTo);
 			} catch (ParseException e) {
 				// TODO Auto-generated catch block
 				response.setStatusCode(1);
-				response.setResultMessage("Exception parsing dateFrom or dateTo");
+				response.setResultMessage(Constants.DATE_PARSING_EXCEPTION);
 				e.printStackTrace();
 			}
 
@@ -85,7 +86,7 @@ public class TripService {
 
 		if (response.getStatusCode() == 0) {
 			this.tripDao.save(newTripObj);
-			response.setResultMessage("Trip was created successfully.");
+			response.setResultMessage(Constants.TRIP_CREATE_SUCCESS);
 		}
 
 		return response;
@@ -124,7 +125,7 @@ public class TripService {
 			List<DestinationVO> destinationVOList = new ArrayList<>();
 			destinationViewList.forEach(destination -> {
 				DestinationVO destinationVO = new DestinationVO();
-				SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
+				SimpleDateFormat formatter = new SimpleDateFormat(Constants.DD_MM_YYYY);
 				destinationVO.setCtryName(destination.getCtryName());
 				destinationVO.setCityName(destination.getCityName());
 				destinationVO.setDateFromStr(formatter.format(destination.getDateFrom()));
@@ -155,7 +156,8 @@ public class TripService {
 		StatusResponse response = new StatusResponse();
 
 		this.tripDao.deleteById(id);
-		response.setResultMessage("Trip ID: " + id + " was deleted successfully.");
+		String resultMsg = String.format(Constants.TRIP_DELETE_SUCCESS, id);
+		response.setResultMessage(resultMsg);
 
 		return response;
 	}
