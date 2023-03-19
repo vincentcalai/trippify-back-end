@@ -22,12 +22,12 @@
 /*!40000 ALTER TABLE `tb_dest_cd` DISABLE KEYS */;
 
 --init tb_usr
-INSERT INTO `tb_usr` (`id`, `usr_nam`, `pwd`, `email`, `contact_no`,  `del_ind`, `created_by`, `created_dt`) VALUES 
-(1, 'TESTUSER', '$2a$10$bnjuoWda4g6T91PVg9twXOIp9CVpNByQXm4OaLdkJZd7x3hkal6Wq', 'TESTUSER@TEST.COM', '99999999', 'N', 'TESTUSER', CURRENT_TIMESTAMP());
-INSERT INTO `tb_usr` (`id`, `usr_nam`, `pwd`, `email`, `contact_no`,  `del_ind`, `created_by`, `created_dt`) VALUES 
-(2, 'TESTUSER2', '$2a$10$bnjuoWda4g6T91PVg9twXOIp9CVpNByQXm4OaLdkJZd7x3hkal6Wq', 'TESTUSER2@TEST.COM', '99999999', 'N', 'TESTUSER2', CURRENT_TIMESTAMP());
-INSERT INTO `tb_usr` (`id`, `usr_nam`, `pwd`, `email`, `contact_no`,  `del_ind`, `created_by`, `created_dt`) VALUES 
-(3, 'TESTUSER3', '$2a$10$bnjuoWda4g6T91PVg9twXOIp9CVpNByQXm4OaLdkJZd7x3hkal6Wq', 'TESTUSER3@TEST.COM', '99999999', 'N', 'TESTUSER3', CURRENT_TIMESTAMP());
+INSERT INTO `tb_usr` (`id`, `usr_nam`, `pwd`, `email`, `contact_no`,  `del_ind`, `created_dt`) VALUES 
+(1, 'TESTUSER', '$2a$10$bnjuoWda4g6T91PVg9twXOIp9CVpNByQXm4OaLdkJZd7x3hkal6Wq', 'TESTUSER@TEST.COM', '99999999', 'N', CURRENT_TIMESTAMP());
+INSERT INTO `tb_usr` (`id`, `usr_nam`, `pwd`, `email`, `contact_no`,  `del_ind`, `created_dt`) VALUES 
+(2, 'TESTUSER2', '$2a$10$bnjuoWda4g6T91PVg9twXOIp9CVpNByQXm4OaLdkJZd7x3hkal6Wq', 'TESTUSER2@TEST.COM', '99999999', 'N', CURRENT_TIMESTAMP());
+INSERT INTO `tb_usr` (`id`, `usr_nam`, `pwd`, `email`, `contact_no`,  `del_ind`, `created_dt`) VALUES 
+(3, 'TESTUSER3', '$2a$10$bnjuoWda4g6T91PVg9twXOIp9CVpNByQXm4OaLdkJZd7x3hkal6Wq', 'TESTUSER3@TEST.COM', '99999999', 'N', CURRENT_TIMESTAMP());
 
 --init tb_dest_cd
 INSERT INTO `tb_dest_cd` (`id`,`ctry`,`city`) VALUES (1,'Afghanistan','‘Alāqahdārī Dīshū');

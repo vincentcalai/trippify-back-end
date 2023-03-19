@@ -18,7 +18,6 @@ public class UserView {
 	private String email;
 	private String contactNo;
 	private String delInd;
-	private String createdBy;
 	private Date createdDt;
 
 	@Id
@@ -75,15 +74,6 @@ public class UserView {
 
 	public void setDelInd(String delInd) {
 		this.delInd = delInd;
-	}
-
-	@Column(name = "created_by", nullable = true, length = 20)
-	public String getCreatedBy() {
-		return createdBy;
-	}
-
-	public void setCreatedBy(String createdBy) {
-		this.createdBy = createdBy;
 	}
 
 	@Column(name = "created_dt", nullable = true)
